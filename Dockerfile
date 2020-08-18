@@ -3,3 +3,6 @@ MAINTAINER Konekoe team dockerhub@examos.fi
 
 # Add user student with home dir
 RUN useradd --create-home student
+
+# Update package cache and install make
+RUN apt-get update && apt-get install build-essential
