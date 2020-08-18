@@ -5,4 +5,4 @@ MAINTAINER Konekoe team dockerhub@examos.fi
 RUN useradd --create-home student
 
 # Update package cache and install make
-RUN apt-get update && apt-get -y install build-essential
+RUN apt-get update && apt-get -y install build-essential valgrind
