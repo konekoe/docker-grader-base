@@ -4,9 +4,13 @@ MAINTAINER Konekoe team dockerhub@examos.fi
 # Add user student with home dir
 RUN useradd --create-home student
 
-# Set timezone
-ENV TZ=Europe/Helsinki
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+# Add grader directory into student's home dir
+RUN mkdir -p /home/student/grader && chown student /home/student/grader
 
-# Update package cache and install make
-RUN apt-get update && apt-get -y install build-essential valgrind
+# Add rsync binary to the grader base image
+apt-get update && apt-get -y install rsync
+
+# Entrypoint for every docker image that inherits from this image.
+# DO NOT OVERWRITE THIS ENTRYPOINT, OR YOUR GRADER WON'T WORK !
+ENTRYPOINT ["rsync", "-aE", "/var/grader", "/home/student/grader"]
+
