@@ -12,5 +12,5 @@ RUN apt-get update && apt-get -y install rsync
 
 # Entrypoint for every docker image that inherits from this image.
 # DO NOT OVERWRITE THIS ENTRYPOINT, OR YOUR GRADER WON'T WORK !
-ENTRYPOINT ["rsync", "-aE", "/var/grader", "/home/student/grader"]
+# ENTRYPOINT ["rsync", "-aE", "/var/grader", "/home/student/grader"]
 
