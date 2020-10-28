@@ -53,12 +53,12 @@ GRADER_DIR=$1
 GRADER_TIMEOUT=$2
 
 if [ -z "$1" ]; then
-    write_error_json INTERNAL "No grader dir argument given! Exiting..."
+    write_error_json INTERNAL "Fatal error: No grader dir argument given! Exiting..."
     exit 0
 fi
 
 if [ -z "$2" ]; then
-    echo "No grader timeout argument given! Using default of 15..."
+    echo "Using default of grader timeout of 15 seconds"
     GRADER_TIMEOUT=15
 fi
 
@@ -66,7 +66,6 @@ fi
 # check that dir is correct
 dir_check_help=$GRADER_DIR
 while [ $dir_check_help != "/" ]; do
-    echo $dir_check_help
     if [ $dir_check_help == "/home/student/grader" ]; then
         break
     elif [ $dir_check_help == "." ]; then
@@ -86,7 +85,6 @@ fi
 ( run_grader ) & pid=$!
 ( sleep $GRADER_TIMEOUT && kill -HUP $pid ) 2>/dev/null & watcher=$!
 if wait $pid 2>/dev/null; then
-    echo "your_command finished with status $?"
     pkill -HUP -P $watcher
     wait $watcher
 else
