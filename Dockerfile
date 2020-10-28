@@ -1,6 +1,11 @@
 FROM ubuntu:20.04
 MAINTAINER Konekoe team dockerhub@examos.fi
 
+# Add base grader dir & the base grader script
+RUN mkdir -p /opt/grader
+COPY base-grader /opt/grader/base-grader
+chmod +x /opt/grader/base-grader
+
 # Add user student with home dir
 RUN useradd --create-home student
 
